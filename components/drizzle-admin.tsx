@@ -175,6 +175,7 @@ function DrizzleList(props: DrizzleAdminProps) {
           {columnsData.columns.map((col: any) => {
             return <th key={col.name}>{col.name}</th>;
           })}
+          <th>actions</th>
         </tr>
       </thead>
       <tbody>
@@ -185,6 +186,25 @@ function DrizzleList(props: DrizzleAdminProps) {
                 {columnsData.columns.map((col: any) => {
                   return <td key={col.name}>{obj[col.name]}</td>;
                 })}
+                <td>
+                  <a
+                    href={`/drizzle-admin/show?table=${props.searchParams.table}`}
+                  >
+                    show
+                  </a>{" "}
+                  |{" "}
+                  <a
+                    href={`/drizzle-admin/edit?table=${props.searchParams.table}`}
+                  >
+                    edit
+                  </a>{" "}
+                  |{" "}
+                  <a
+                    href={`/drizzle-admin/delete?table=${props.searchParams.table}`}
+                  >
+                    delete
+                  </a>
+                </td>
               </tr>
             );
           }

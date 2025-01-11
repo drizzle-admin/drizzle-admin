@@ -28,6 +28,10 @@
   width: 100%;
 }
 
+.drizzle table a {
+  color: lightskyblue;
+}
+
 .drizzle th {
   text-align: left;
 }
