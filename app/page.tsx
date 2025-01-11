@@ -1,9 +1,9 @@
-import { DrizzleAdmin } from "@/components";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <div>
-      <DrizzleAdmin />
+      <Link href="/drizzle-admin/index">drizzle admin</Link>
     </div>
   );
 }

@@ -24,11 +24,21 @@ const TablesType = new GraphQLObjectType({
   },
 });
 
+const ColumnsType = new GraphQLObjectType({
+  name: "Columns",
+  description: "all the columns for a table",
+  fields: {
+    name: { type: GraphQLString },
+    dataType: { type: GraphQLString },
+  },
+});
+
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: "Query",
     fields: {
       usersTable: entities.queries.usersTable,
+
       tables: {
         resolve: async () => {
           const tables = Object.keys(entities.queries)
@@ -44,6 +54,23 @@ const schema = new GraphQLSchema({
           return tables;
         },
         type: new GraphQLList(TablesType),
+      },
+
+      columns: {
+        type: new GraphQLList(ColumnsType),
+        args: {
+          table: { type: GraphQLString },
+        },
+        resolve: async (_, { table }: { table: keyof typeof dbSchema }) => {
+          const tableConfig = getTableConfig(dbSchema[table]);
+          const columns = tableConfig.columns.map((col) => {
+            return {
+              name: col.name,
+              dataType: col.dataType,
+            };
+          });
+          return columns.map((col) => col);
+        },
       },
     },
   }),
