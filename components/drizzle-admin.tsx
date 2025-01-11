@@ -32,8 +32,8 @@ export function DrizzleAdmin(props: DrizzleAdminProps) {
   }
 
   return (
-    <div>
-      <header className="border-b border-gray-500 p-2">
+    <div className="drizzle">
+      <header className="header">
         <h1>drizzle admin</h1>
       </header>
       <DrizzleContent {...props} />
@@ -58,9 +58,9 @@ function DrizzleContent(props: DrizzleAdminProps) {
 
   return (
     <ApolloProvider client={client}>
-      <div className="flex gap-5">
+      <div className="content">
         <DrizzleSidebar />
-        <main className="p-2">
+        <main className="main">
           <RenderDrizzlePage {...props} />
         </main>
       </div>
@@ -103,8 +103,7 @@ function DrizzleSidebar() {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div className="p-2">
-      <h1>Drizzle Sidebar</h1>
+    <div className="sidebar">
       <ul>
         {data.tables.map((table: any) => (
           <li key={table.name}>
@@ -170,30 +169,28 @@ function DrizzleList(props: DrizzleAdminProps) {
   if (listError) return <p>Error: {listError.message}</p>;
 
   return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            {columnsData.columns.map((col: any) => {
-              return <th key={col.name}>{col.name}</th>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {listData[props.searchParams.table as keyof typeof listData].map(
-            (obj: any) => {
-              return (
-                <tr key={obj.id}>
-                  {columnsData.columns.map((col: any) => {
-                    return <td key={col.name}>{obj[col.name]}</td>;
-                  })}
-                </tr>
-              );
-            }
-          )}
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          {columnsData.columns.map((col: any) => {
+            return <th key={col.name}>{col.name}</th>;
+          })}
+        </tr>
+      </thead>
+      <tbody>
+        {listData[props.searchParams.table as keyof typeof listData].map(
+          (obj: any) => {
+            return (
+              <tr key={obj.id}>
+                {columnsData.columns.map((col: any) => {
+                  return <td key={col.name}>{obj[col.name]}</td>;
+                })}
+              </tr>
+            );
+          }
+        )}
+      </tbody>
+    </table>
   );
 }
 
